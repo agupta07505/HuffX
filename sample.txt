@@ -1,0 +1,29 @@
+HUFFX SAMPLE FILE — built so every width gets a turn to shine.
+
+Every bit counts. That is the entire philosophy of this project.
+
+Huffman coding gives every frequent symbol a short binary code and every rare symbol a long one, so the average length of the file quietly melts toward its entropy. The recipe never changes: count the symbols, merge the two lightest nodes again and again, then walk the tree writing a zero for every left edge and a one for every right edge.
+
+         Huffman coding gives every frequent symbol a short binary code and every rare symbol a long one, so the average length of the file quietly melts toward its entropy. The recipe never changes: count the symbols, merge the two lightest nodes again and again, then walk the tree writing a zero for every left edge and a one for every right edge.
+
+         Huffman coding gives every frequent symbol a short binary code and every rare symbol a long one, so the average length of the file quietly melts toward its entropy. The recipe never changes: count the symbols, merge the two lightest nodes again and again, then walk the tree writing a zero for every left edge and a one for every right edge.
+
+         Huffman coding gives every frequent symbol a short binary code and every rare symbol a long one, so the average length of the file quietly melts toward its entropy. The recipe never changes: count the symbols, merge the two lightest nodes again and again, then walk the tree writing a zero for every left edge and a one for every right edge.
+
+         Huffman coding gives every frequent symbol a short binary code and every rare symbol a long one, so the average length of the file quietly melts toward its entropy. The recipe never changes: count the symbols, merge the two lightest nodes again and again, then walk the tree writing a zero for every left edge and a one for every right edge.
+
+         Huffman coding gives every frequent symbol a short binary code and every rare symbol a long one, so the average length of the file quietly melts toward its entropy. The recipe never changes: count the symbols, merge the two lightest nodes again and again, then walk the tree writing a zero for every left edge and a one for every right edge.
+
+         Huffman coding gives every frequent symbol a short binary code and every rare symbol a long one, so the average length of the file quietly melts toward its entropy. The recipe never changes: count the symbols, merge the two lightest nodes again and again, then walk the tree writing a zero for every left edge and a one for every right edge.
+
+         the quick brown fox jumps over the lazy dog
+the quick brown fox jumps over the lazy dog
+the quick brown fox jumps over the lazy dog
+the quick brown fox jumps over the lazy dog
+the quick brown fox jumps over the lazy dog
+the quick brown fox jumps over the lazy dog
+
+Compress it, decompress it, and check for yourself: the round trip is lossless.
+
+Compress it, decompress it, and check for yourself: the round trip is lossless.
+Every bit counts. Team HuffX — Animesh & Vikrant.

@@ -1,0 +1,20 @@
+{
+  "name": "huffx",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "HuffX — Every bit counts. Huffman text compression at 8/32/64/128-bit symbol widths. Next.js UI over a pure-Python engine.",
+  "scripts": {
+    "dev": "next dev -p 5000",
+    "build": "next build",
+    "start": "next start -p 5000 -H 0.0.0.0"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "dependencies": {
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}
