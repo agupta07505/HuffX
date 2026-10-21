@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import styles from './page.module.css';
 
@@ -9,7 +9,7 @@ const PALETTE = [
   '#8b5cf6', '#06b6d4', '#84cc16', '#f97316', '#14b8a6',
 ];
 
-const PRESETS = ['ABRACADABRA', 'HUFFMAN', 'EVERY BIT COUNTS', 'HELLO WORLD'];
+const PRESETS = ['EVERY BIT COUNTS', 'HELLO WORLD'];
 
 // ==============================================================================
 // Pure Huffman DSA Step Generator
@@ -159,11 +159,11 @@ function layoutTree(root) {
   }
   assignLeafX(root, 0);
 
-  const NODE_R = 21;
-  const LEVEL_H = 76;
-  const COL_W = 64;
-  const PAD_X = 36;
-  const PAD_Y = 32;
+  const NODE_R = 20;
+  const LEVEL_H = 72;
+  const COL_W = 58;
+  const PAD_X = 32;
+  const PAD_Y = 30;
 
   const totalWidth = Math.max(PAD_X * 2 + leafIndex * COL_W, 360);
   const totalHeight = PAD_Y * 2 + maxDepth * LEVEL_H + NODE_R * 2;
@@ -231,10 +231,10 @@ function layoutTree(root) {
 }
 
 // ==============================================================================
-// Interactive Animations Component
+// Interactive Animations Component (Side-by-Side Dashboard Layout)
 // ==============================================================================
 export default function AnimationsPage() {
-  const [inputVal, setInputVal] = useState('ABRACADABRA');
+  const [inputVal, setInputVal] = useState('EVERY BIT COUNTS');
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playSpeed, setPlaySpeed] = useState(1); // 1x or 2x
@@ -289,242 +289,177 @@ export default function AnimationsPage() {
 
   return (
     <main className={styles.page}>
-      <div className={styles.header}>
-        <p className={styles.kicker}>INTERACTIVE DSA VISUALIZER</p>
-        <h1 className={styles.title}>Watch Huffman Think.</h1>
-        <p className={styles.subtitle}>
-          Step-by-step interactive demonstration of the greedy binary tree construction, prefix codes, and bitstream compression.
-        </p>
+      {/* Top Header Bar */}
+      <div className={styles.topBar}>
+        <div>
+          <p className={styles.kicker}>HUFFX • VISUALIZER</p>
+          <h1 className={styles.title}>Watch Huffman Think.</h1>
+        </div>
+        <Link href="/" className={styles.backBtn}>
+          ← Return to Workspace
+        </Link>
       </div>
 
-      {/* Input & Presets Bar */}
-      <section className={styles.controlCard} aria-label="Input controls">
-        <div className={styles.inputRow}>
-          <div className={styles.inputWrap}>
-            <label htmlFor="textInput" className={styles.label}>TEST WORD OR PHRASE</label>
-            <input
-              id="textInput"
-              type="text"
-              className={styles.textInput}
-              value={inputVal}
-              maxLength={24}
-              onChange={e => setInputVal(e.target.value.toUpperCase())}
-              placeholder="TYPE A WORD (MAX 24 CHARS)"
-            />
-          </div>
-          <div className={styles.presetWrap}>
-            <span className={styles.label}>PRESETS</span>
-            <div className={styles.presetButtons}>
-              {PRESETS.map(p => (
-                <button
-                  key={p}
-                  type="button"
-                  className={`${styles.presetBtn} ${inputVal === p ? styles.presetActive : ''}`}
-                  onClick={() => setInputVal(p)}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Visualizer Main Card */}
+      {/* Main Two-Column Side-by-Side Dashboard */}
       {model && (
-        <section className={styles.vizCard} aria-label="Visualizer Stage">
-          {/* Top Step Controller */}
-          <div className={styles.stepBar}>
-            <div className={styles.stepInfo}>
-              <span className={styles.stepBadge}>
-                {currentStep === 0
-                  ? 'Step 0: Initial Min-Heap Leaves'
-                  : currentStep === totalSteps
-                  ? 'Complete: Full Tree Built'
-                  : `Merge Step ${currentStep} of ${totalSteps}`}
-              </span>
+        <div className={styles.dashboardGrid}>
+          {/* LEFT COLUMN: Controls, Frequencies, Codebook, and Bitstream */}
+          <div className={styles.leftCol}>
+            {/* 1. Input & Presets */}
+            <div className={styles.card}>
+              <div className={styles.inputWrap}>
+                <label htmlFor="textInput" className={styles.label}>TEST TEXT (MAX 24 CHARS)</label>
+                <input
+                  id="textInput"
+                  type="text"
+                  className={styles.textInput}
+                  value={inputVal}
+                  maxLength={24}
+                  onChange={e => setInputVal(e.target.value.toUpperCase())}
+                  placeholder="TYPE A WORD OR PHRASE"
+                />
+              </div>
+
+              {/* Presets */}
+              <div className={styles.presetRow}>
+                <span className={styles.presetLabel}>Preset:</span>
+                {PRESETS.map(p => (
+                  <button
+                    key={p}
+                    type="button"
+                    className={`${styles.presetBtn} ${inputVal === p ? styles.presetActive : ''}`}
+                    onClick={() => setInputVal(p)}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+
+              {/* Frequencies */}
+              <div className={styles.freqRow}>
+                {Object.entries(model.freqMap).map(([ch, count], i) => (
+                  <div key={ch} className={styles.freqPill}>
+                    <span className={styles.freqChar} style={{ color: PALETTE[i % PALETTE.length] }}>
+                      {ch === ' ' ? '␣' : ch}
+                    </span>
+                    <span className={styles.freqCount}>×{count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 2. Step Controller Bar */}
+            <div className={styles.card}>
+              <div className={styles.stepHeader}>
+                <span className={styles.stepBadge}>
+                  {currentStep === 0
+                    ? 'Step 0: Initial Min-Heap Leaves'
+                    : currentStep === totalSteps
+                      ? 'Complete: Full Tree Built ✓'
+                      : `Merge Step ${currentStep} of ${totalSteps}`}
+                </span>
+                <button
+                  type="button"
+                  className={styles.speedBtn}
+                  onClick={() => setPlaySpeed(s => (s === 1 ? 2 : 1))}
+                  title="Toggle animation speed"
+                >
+                  {playSpeed}× Speed
+                </button>
+              </div>
+
+              <div className={styles.stepControls}>
+                <button
+                  type="button"
+                  className={styles.ctrlBtn}
+                  onClick={() => { setIsPlaying(false); setCurrentStep(0); }}
+                  title="Reset to initial leaves"
+                >
+                  ⏮ Start
+                </button>
+                <button
+                  type="button"
+                  className={styles.ctrlBtn}
+                  onClick={() => { setIsPlaying(false); setCurrentStep(s => Math.max(0, s - 1)); }}
+                  disabled={currentStep === 0}
+                  title="Previous merge step"
+                >
+                  ◀ Prev
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.ctrlBtn} ${styles.ctrlPrimary}`}
+                  onClick={() => {
+                    if (currentStep >= totalSteps) setCurrentStep(0);
+                    setIsPlaying(!isPlaying);
+                  }}
+                >
+                  {isPlaying ? '⏸ Pause' : currentStep >= totalSteps ? '↺ Replay' : '▶ Play'}
+                </button>
+                <button
+                  type="button"
+                  className={styles.ctrlBtn}
+                  onClick={() => { setIsPlaying(false); setCurrentStep(s => Math.min(totalSteps, s + 1)); }}
+                  disabled={currentStep >= totalSteps}
+                  title="Next merge step"
+                >
+                  Next ▶
+                </button>
+              </div>
+
               <p className={styles.stepDesc}>
                 {currentStep === 0
-                  ? 'Every unique symbol is placed into a priority queue leaf node with its frequency.'
+                  ? 'All unique symbols initialised in priority queue leaf nodes.'
                   : currentStep === totalSteps
-                  ? 'All nodes merged into a single root. Left branches represent bit 0, right branches represent bit 1.'
-                  : `Greedily merged the two lightest nodes to form parent node #${model.merges[currentStep - 1]?.parentId} with sum frequency.`}
+                    ? 'Complete binary prefix tree constructed. Left = 0, Right = 1.'
+                    : `Merged lightest nodes into parent #${model.merges[currentStep - 1]?.parentId} (sum freq: ${model.merges[currentStep - 1]?.parent?.count}).`}
               </p>
             </div>
 
-            <div className={styles.stepControls}>
-              <button
-                type="button"
-                className={styles.ctrlBtn}
-                onClick={() => { setIsPlaying(false); setCurrentStep(0); }}
-                title="Restart from beginning"
-              >
-                ⏮ Start
-              </button>
-              <button
-                type="button"
-                className={styles.ctrlBtn}
-                onClick={() => { setIsPlaying(false); setCurrentStep(s => Math.max(0, s - 1)); }}
-                disabled={currentStep === 0}
-                title="Previous merge step"
-              >
-                ◀ Prev
-              </button>
-              <button
-                type="button"
-                className={`${styles.ctrlBtn} ${styles.ctrlPrimary}`}
-                onClick={() => {
-                  if (currentStep >= totalSteps) setCurrentStep(0);
-                  setIsPlaying(!isPlaying);
-                }}
-              >
-                {isPlaying ? '⏸ Pause' : currentStep >= totalSteps ? '↺ Replay' : '▶ Play'}
-              </button>
-              <button
-                type="button"
-                className={styles.ctrlBtn}
-                onClick={() => { setIsPlaying(false); setCurrentStep(s => Math.min(totalSteps, s + 1)); }}
-                disabled={currentStep >= totalSteps}
-                title="Next merge step"
-              >
-                Next ▶
-              </button>
-              <button
-                type="button"
-                className={styles.speedBtn}
-                onClick={() => setPlaySpeed(s => (s === 1 ? 2 : 1))}
-                title="Toggle playback speed"
-              >
-                {playSpeed}× Speed
-              </button>
-            </div>
-          </div>
-
-          {/* Character Frequency Row */}
-          <div className={styles.freqRow}>
-            {Object.entries(model.freqMap).map(([ch, count], i) => (
-              <div key={ch} className={styles.freqPill}>
-                <span className={styles.freqChar} style={{ color: PALETTE[i % PALETTE.length] }}>
-                  {ch === ' ' ? '␣' : ch}
-                </span>
-                <span className={styles.freqCount}>×{count}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Dynamic SVG Binary Tree Stage */}
-          <div className={styles.treeStage}>
-            {layout && (
-              <svg
-                viewBox={`0 0 ${layout.width} ${layout.height}`}
-                className={styles.treeSvg}
-                role="img"
-                aria-label="Interactive Huffman Binary Tree"
-              >
-                {/* Edges */}
-                {layout.edges.map(e => {
-                  const isVisible = activeVisibility.edgeKeys.has(e.key);
-                  return (
-                    <g key={e.key} className={styles.edgeGroup} opacity={isVisible ? 1 : 0.08}>
-                      <line
-                        x1={e.x1}
-                        y1={e.y1}
-                        x2={e.x2}
-                        y2={e.y2}
-                        className={styles.treeEdge}
-                      />
-                      <circle cx={e.midX} cy={e.midY} r="9" className={styles.edgeBadgeBg} />
-                      <text x={e.midX} y={e.midY + 3.5} className={styles.edgeBitText}>
-                        {e.bit}
-                      </text>
-                    </g>
-                  );
-                })}
-
-                {/* Nodes */}
-                {layout.nodes.map(n => {
-                  const isVisible = activeVisibility.nodeIds.has(n.id);
-                  return (
-                    <g
-                      key={n.id}
-                      className={`${styles.treeNode} ${n.isLeaf ? styles.nodeLeaf : styles.nodeInternal}`}
-                      transform={`translate(${n.cx}, ${n.cy})`}
-                      opacity={isVisible ? 1 : 0.08}
-                    >
-                      <circle
-                        r="21"
-                        className={styles.nodeCircle}
-                        style={{
-                          stroke: n.isLeaf ? n.color : '#111114',
-                          fill: n.isLeaf ? '#ffffff' : '#f8fafc',
-                        }}
-                      />
-                      {n.isLeaf ? (
-                        <>
-                          <text y="4" className={styles.nodeChar} fill={n.color}>
-                            {n.ch === ' ' ? '␣' : n.ch}
-                          </text>
-                          <text y="32" className={styles.nodeSubFreq}>
-                            ×{n.count}
-                          </text>
-                        </>
-                      ) : (
-                        <text y="4" className={styles.nodeFreq} fill="#111114">
-                          {n.count}
-                        </text>
-                      )}
-                    </g>
-                  );
-                })}
-              </svg>
-            )}
-          </div>
-
-          {/* Bottom Code Table & Packed Bitstream */}
-          <div className={styles.bottomGrid}>
-            {/* Prefix Codebook Table */}
-            <div className={styles.codesCard}>
+            {/* 3. Codebook Table */}
+            <div className={styles.card}>
               <div className={styles.cardHeader}>
                 <span className={styles.cardLabel}>PREFIX CODEBOOK TABLE</span>
                 <span className={styles.cardBadge}>Prefix-Free ✓</span>
               </div>
-              <table className={styles.codesTable}>
-                <thead>
-                  <tr>
-                    <th>Symbol</th>
-                    <th>Freq</th>
-                    <th>Huffman Code</th>
-                    <th>Bits</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(model.codeMap).map(([sym, code], idx) => (
-                    <tr key={sym}>
-                      <td>
-                        <span className={styles.symDot} style={{ background: PALETTE[idx % PALETTE.length] }} />
-                        <b style={{ color: PALETTE[idx % PALETTE.length] }}>{sym === ' ' ? 'SPACE' : sym}</b>
-                      </td>
-                      <td className={styles.monoCol}>×{model.freqMap[sym]}</td>
-                      <td className={styles.monoCol}>
-                        <code className={styles.codePill} style={{ color: PALETTE[idx % PALETTE.length] }}>
-                          {code}
-                        </code>
-                      </td>
-                      <td className={styles.monoCol}>{code.length}b</td>
+              <div className={styles.tableScroll}>
+                <table className={styles.codesTable}>
+                  <thead>
+                    <tr>
+                      <th>Symbol</th>
+                      <th>Freq</th>
+                      <th>Huffman Code</th>
+                      <th>Bits</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {Object.entries(model.codeMap).map(([sym, code], idx) => (
+                      <tr key={sym}>
+                        <td>
+                          <span className={styles.symDot} style={{ background: PALETTE[idx % PALETTE.length] }} />
+                          <b style={{ color: PALETTE[idx % PALETTE.length] }}>{sym === ' ' ? 'SPACE' : sym}</b>
+                        </td>
+                        <td className={styles.monoCol}>×{model.freqMap[sym]}</td>
+                        <td className={styles.monoCol}>
+                          <code className={styles.codePill} style={{ color: PALETTE[idx % PALETTE.length] }}>
+                            {code}
+                          </code>
+                        </td>
+                        <td className={styles.monoCol}>{code.length}b</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            {/* Bitstream Comparison */}
-            <div className={styles.verdictCard}>
+            {/* 4. Bitstream & Comparison Banner */}
+            <div className={styles.card}>
               <div className={styles.cardHeader}>
-                <span className={styles.cardLabel}>ENCODED BITSTREAM</span>
+                <span className={styles.cardLabel}>PACKED BITSTREAM</span>
                 <span className={styles.cardBadgeGood}>{model.savedPct}% Saved</span>
               </div>
 
-              {/* Bitstream sequence */}
               <div className={styles.bitstreamWrap}>
                 {model.text.split('').map((ch, i) => (
                   <span
@@ -541,31 +476,103 @@ export default function AnimationsPage() {
                 ))}
               </div>
 
-              {/* Stat Comparison Banner */}
               <div className={styles.compareBanner}>
                 <div className={styles.compareItem}>
                   <span className={styles.cLabel}>RAW ASCII</span>
                   <span className={styles.cVal}>{model.rawBits} <small>bits</small></span>
-                  <span className={styles.cSub}>{model.text.length} chars × 8 bits</span>
                 </div>
                 <div className={styles.compareArrow}>➔</div>
                 <div className={styles.compareItem}>
                   <span className={styles.cLabel}>HUFFMAN PACKED</span>
                   <span className={styles.cValGood}>{model.compressedBits} <small>bits</small></span>
-                  <span className={styles.cSub}>avg {(model.compressedBits / model.text.length).toFixed(2)} bits/char</span>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-      )}
 
-      {/* Return to workspace button */}
-      <div className={styles.backRow}>
-        <Link href="/" className={styles.backBtn}>
-          ← Return to Compression Workspace
-        </Link>
-      </div>
+          {/* RIGHT COLUMN: Interactive Binary Tree Stage */}
+          <div className={styles.rightCol}>
+            <div className={styles.treeCard}>
+              <div className={styles.treeHeader}>
+                <div>
+                  <span className={styles.treeTitle}>HUFFMAN BINARY TREE STAGE</span>
+                  <span className={styles.treeSub}>
+                    {activeVisibility.nodeIds.size} nodes · {activeVisibility.edgeKeys.size} edges visible
+                  </span>
+                </div>
+                <span className={styles.treeHint}>0 = Left · 1 = Right</span>
+              </div>
+
+              <div className={styles.treeContainer}>
+                {layout && (
+                  <svg
+                    viewBox={`0 0 ${layout.width} ${layout.height}`}
+                    className={styles.treeSvg}
+                    role="img"
+                    aria-label="Interactive Huffman Binary Tree"
+                  >
+                    {/* Edges */}
+                    {layout.edges.map(e => {
+                      const isVisible = activeVisibility.edgeKeys.has(e.key);
+                      return (
+                        <g key={e.key} className={styles.edgeGroup} opacity={isVisible ? 1 : 0.08}>
+                          <line
+                            x1={e.x1}
+                            y1={e.y1}
+                            x2={e.x2}
+                            y2={e.y2}
+                            className={styles.treeEdge}
+                          />
+                          <circle cx={e.midX} cy={e.midY} r="8.5" className={styles.edgeBadgeBg} />
+                          <text x={e.midX} y={e.midY + 3.5} className={styles.edgeBitText}>
+                            {e.bit}
+                          </text>
+                        </g>
+                      );
+                    })}
+
+                    {/* Nodes */}
+                    {layout.nodes.map(n => {
+                      const isVisible = activeVisibility.nodeIds.has(n.id);
+                      return (
+                        <g
+                          key={n.id}
+                          className={`${styles.treeNode} ${n.isLeaf ? styles.nodeLeaf : styles.nodeInternal}`}
+                          transform={`translate(${n.cx}, ${n.cy})`}
+                          opacity={isVisible ? 1 : 0.08}
+                        >
+                          <circle
+                            r="20"
+                            className={styles.nodeCircle}
+                            style={{
+                              stroke: n.isLeaf ? n.color : '#111114',
+                              fill: n.isLeaf ? '#ffffff' : '#f8fafc',
+                            }}
+                          />
+                          {n.isLeaf ? (
+                            <>
+                              <text y="4" className={styles.nodeChar} fill={n.color}>
+                                {n.ch === ' ' ? '␣' : n.ch}
+                              </text>
+                              <text y="30" className={styles.nodeSubFreq}>
+                                ×{n.count}
+                              </text>
+                            </>
+                          ) : (
+                            <text y="4" className={styles.nodeFreq} fill="#111114">
+                              {n.count}
+                            </text>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </svg>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

@@ -1,74 +1,141 @@
 /* ==============================================================================
-   HuffX — Interactive Animations Page Module Styles (app/animations/page.js)
+   HuffX — Interactive Animations Page Module Styles (Side-by-Side Dashboard)
    ============================================================================== */
 
 .page {
   flex: 1;
-  width: min(920px, calc(100% - 36px));
+  width: min(1440px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 56px 0 64px;
+  padding: 24px 0 40px;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 28px;
+/* ------------------------------------------------------------------ Top Bar */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 14px;
 }
 
 .kicker {
-  font-size: .72rem;
+  font-size: .7rem;
   font-weight: 700;
   letter-spacing: .2em;
   color: var(--accent);
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.4rem);
   font-weight: 800;
   letter-spacing: -.03em;
   color: var(--ink);
   line-height: 1.1;
 }
 
-.subtitle {
-  margin-top: 10px;
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 .82rem var(--font-ui);
   color: var(--muted);
-  font-size: .98rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.5;
-}
-
-/* -------------------------------------------------------- Input Control Card */
-.controlCard {
-  background: rgba(255, 255, 255, .85);
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: var(--soft);
   border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 18px 22px;
-  box-shadow: 0 4px 18px -6px rgba(17, 17, 20, .05);
-  backdrop-filter: blur(12px);
-  margin-bottom: 22px;
+  transition: all .2s;
 }
 
-.inputRow {
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-  flex-wrap: wrap;
+.backBtn:hover {
+  color: var(--ink);
+  background: #ffffff;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
 }
 
-.inputWrap {
-  flex: 1;
-  min-width: 240px;
+/* ----------------------------------------------------------- Dashboard Grid */
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.leftCol {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 14px;
+}
+
+.rightCol {
+  position: sticky;
+  top: 86px;
+  height: calc(100vh - 120px);
+  min-height: 560px;
+  max-height: 820px;
+}
+
+/* Standard Shared Card */
+.card {
+  background: rgba(255, 255, 255, .92);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 16px -8px rgba(17, 17, 20, .06);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Card Header */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardLabel {
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.cardBadge {
+  font-size: .72rem;
+  font-weight: 700;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.cardBadgeGood {
+  font-size: .78rem;
+  font-weight: 800;
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+  padding: 2px 9px;
+  border-radius: 999px;
+}
+
+/* ---------------------------------------------------------- 1. Input Section */
+.inputWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .label {
-  font-size: .66rem;
+  font-size: .64rem;
   font-weight: 700;
   letter-spacing: .12em;
   color: #64748b;
@@ -78,11 +145,11 @@
 .textInput {
   border: 1.5px solid var(--line);
   background: #ffffff;
-  border-radius: 12px;
-  padding: 10px 14px;
-  font: 700 1.05rem var(--font-mono);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font: 700 .98rem var(--font-mono);
   color: var(--ink);
-  letter-spacing: .06em;
+  letter-spacing: .05em;
   outline: none;
   transition: border-color .2s, box-shadow .2s;
 }
@@ -92,24 +159,25 @@
   box-shadow: 0 0 0 3px rgba(79, 70, 229, .15);
 }
 
-.presetWrap {
+.presetRow {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.presetButtons {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+.presetLabel {
+  font-size: .7rem;
+  color: #64748b;
+  font-weight: 600;
 }
 
 .presetBtn {
   background: var(--soft);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 6px 12px;
-  font: 600 .76rem var(--font-mono);
+  padding: 4px 10px;
+  font: 600 .72rem var(--font-mono);
   color: #4b5563;
   cursor: pointer;
   transition: all .2s;
@@ -129,53 +197,66 @@
   font-weight: 700;
 }
 
-/* ----------------------------------------------------------- Visualizer Card */
-.vizCard {
-  background: rgba(255, 255, 255, .95);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  box-shadow: var(--shadow-card);
-  padding: 24px;
-  backdrop-filter: blur(14px);
+/* Frequency Pills */
+.freqRow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
-/* Step Bar */
-.stepBar {
+.freqPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 3px 8px;
+  box-shadow: 0 1px 2px rgba(17, 17, 20, .03);
+}
+
+.freqChar {
+  font: 700 .9rem var(--font-display);
+}
+
+.freqCount {
+  font: 600 .72rem var(--font-mono);
+  color: #64748b;
+}
+
+/* ---------------------------------------------------- 2. Step Controller Bar */
+.stepHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1.5px solid var(--line);
-  padding-bottom: 18px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.stepInfo {
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
 }
 
 .stepBadge {
   font-family: var(--font-display);
-  font-size: .84rem;
+  font-size: .82rem;
   font-weight: 700;
   color: var(--accent);
 }
 
-.stepDesc {
-  font-size: .82rem;
-  color: #4b5563;
-  line-height: 1.4;
+.speedBtn {
+  background: none;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  padding: 3px 9px;
+  font: 600 .7rem var(--font-mono);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.speedBtn:hover {
+  color: var(--ink);
+  border-color: #94a3b8;
 }
 
 .stepControls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  gap: 6px;
 }
 
 .ctrlBtn {
@@ -183,10 +264,13 @@
   background: #ffffff;
   color: var(--ink);
   border-radius: 999px;
-  padding: 7px 14px;
-  font: 600 .82rem var(--font-ui);
+  padding: 6px 12px;
+  font: 600 .78rem var(--font-ui);
   cursor: pointer;
   transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ctrlBtn:hover:not(:disabled) {
@@ -196,7 +280,7 @@
 }
 
 .ctrlBtn:disabled {
-  opacity: .45;
+  opacity: .4;
   cursor: not-allowed;
 }
 
@@ -210,72 +294,211 @@
   background: #000000 !important;
 }
 
-.speedBtn {
-  background: none;
-  border: 1px dashed var(--line);
-  border-radius: 999px;
-  padding: 7px 11px;
-  font: 600 .76rem var(--font-mono);
-  color: var(--muted);
-  cursor: pointer;
+.stepDesc {
+  font-size: .78rem;
+  color: #4b5563;
+  line-height: 1.35;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  padding: 6px 10px;
 }
 
-.speedBtn:hover {
-  color: var(--ink);
-  border-color: #94a3b8;
-}
-
-/* Frequency Pills Row */
-.freqRow {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.freqPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #ffffff;
-  border: 1.5px solid var(--line);
-  border-radius: 12px;
-  padding: 5px 12px;
-  box-shadow: 0 1px 3px rgba(17, 17, 20, .04);
-}
-
-.freqChar {
-  font: 700 1.05rem var(--font-display);
-}
-
-.freqCount {
-  font: 600 .8rem var(--font-mono);
-  color: #64748b;
-}
-
-/* Tree Stage */
-.treeStage {
-  background: radial-gradient(circle, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.6) 100%);
+/* ---------------------------------------------------- 3. Codebook Table Card */
+.tableScroll {
+  max-height: 165px;
+  overflow-y: auto;
+  border-radius: 8px;
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 20px 10px;
+}
+
+.codesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .8rem;
+  background: #ffffff;
+}
+
+.codesTable th {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  text-align: left;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #64748b;
+  text-transform: uppercase;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+  z-index: 2;
+}
+
+.codesTable td {
+  padding: 5px 8px;
+  border-bottom: 1px solid rgba(226, 232, 240, .6);
+}
+
+.symDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.monoCol {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.codePill {
+  background: #f8fafc;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  letter-spacing: .06em;
+}
+
+/* ---------------------------------------------------- 4. Bitstream & Verdict */
+.bitstreamWrap {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: .84rem;
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  line-height: 1.6;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+.bitToken {
+  font-weight: 700;
+}
+
+.compareBanner {
+  background: #ffffff;
+  border: 1.5px solid #dbeafe;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
   align-items: center;
-  overflow-x: auto;
-  min-height: 280px;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.compareItem {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.compareArrow {
+  font-size: 1.1rem;
+  color: #94a3b8;
+}
+
+.cLabel {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.cVal {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.cValGood {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #047857;
+}
+
+/* -------------------------------------------------- RIGHT COLUMN: Tree Stage */
+.treeCard {
+  height: 100%;
+  background: rgba(255, 255, 255, .95);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  padding: 18px 20px;
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.treeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.treeTitle {
+  font-family: var(--font-display);
+  font-size: .84rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: var(--ink);
+  display: block;
+}
+
+.treeSub {
+  font-size: .74rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.treeHint {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid #dbeafe;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.treeContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 14px 6px;
+  background: radial-gradient(circle, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.7) 100%);
+  border-radius: 14px;
+  margin-top: 12px;
+  min-height: 0;
 }
 
 .treeSvg {
   display: block;
   max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
   transition: all .3s ease;
 }
 
 .edgeGroup {
-  transition: opacity .35s ease;
+  transition: opacity .3s ease;
 }
 
 .treeEdge {
@@ -297,229 +520,37 @@
 }
 
 .treeNode {
-  transition: opacity .35s ease, transform .35s ease;
+  transition: opacity .3s ease, transform .3s ease;
 }
 
 .nodeCircle {
-  stroke-width: 2.2;
-  transition: stroke .2s;
+  stroke-width: 2;
   filter: drop-shadow(0 2px 4px rgba(17, 17, 20, .08));
 }
 
 .nodeChar {
-  font: 700 14px var(--font-display);
+  font: 700 13px var(--font-display);
   text-anchor: middle;
 }
 
 .nodeSubFreq {
-  font: 600 10px var(--font-mono);
+  font: 600 9.5px var(--font-mono);
   text-anchor: middle;
   fill: #64748b;
 }
 
 .nodeFreq {
-  font: 700 12px var(--font-mono);
+  font: 700 11.5px var(--font-mono);
   text-anchor: middle;
 }
 
-/* Bottom Grid: Codebook & Bitstream */
-.bottomGrid {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 18px;
-  margin-top: 24px;
-}
-
-.codesCard,
-.verdictCard {
-  background: var(--soft);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 16px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.cardLabel {
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  color: #64748b;
-  text-transform: uppercase;
-}
-
-.cardBadge {
-  font-size: .74rem;
-  font-weight: 700;
-  background: #ecfdf5;
-  color: #047857;
-  border: 1px solid #a7f3d0;
-  padding: 2px 8px;
-  border-radius: 999px;
-}
-
-.cardBadgeGood {
-  font-size: .8rem;
-  font-weight: 800;
-  background: #d1fae5;
-  color: #065f46;
-  border: 1px solid #6ee7b7;
-  padding: 3px 10px;
-  border-radius: 999px;
-}
-
-/* Codebook Table */
-.codesTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: .84rem;
-}
-
-.codesTable th {
-  text-align: left;
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: #94a3b8;
-  text-transform: uppercase;
-  padding: 6px 4px;
-  border-bottom: 1px solid var(--line);
-}
-
-.codesTable td {
-  padding: 6px 4px;
-  border-bottom: 1px solid rgba(226, 232, 240, .6);
-}
-
-.symDot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-
-.monoCol {
-  font-family: var(--font-mono);
-  font-weight: 600;
-}
-
-.codePill {
-  background: #ffffff;
-  padding: 2px 7px;
-  border-radius: 5px;
-  border: 1px solid var(--line);
-  letter-spacing: .08em;
-}
-
-/* Bitstream */
-.bitstreamWrap {
-  background: #ffffff;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-family: var(--font-mono);
-  font-size: .92rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  line-height: 1.8;
-  max-height: 120px;
-  overflow-y: auto;
-}
-
-.bitToken {
-  font-weight: 700;
-  padding-bottom: 1px;
-}
-
-/* Compare Banner */
-.compareBanner {
-  background: #ffffff;
-  border: 1.5px solid #dbeafe;
-  border-radius: 14px;
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 12px;
-}
-
-.compareItem {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.compareArrow {
-  font-size: 1.2rem;
-  color: #94a3b8;
-}
-
-.cLabel {
-  font-size: .64rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: #64748b;
-  text-transform: uppercase;
-}
-
-.cVal {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.cValGood {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #047857;
-}
-
-.cSub {
-  font-size: .72rem;
-  color: #64748b;
-}
-
-/* Back Link */
-.backRow {
-  text-align: center;
-  margin-top: 32px;
-}
-
-.backBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font: 600 .88rem var(--font-ui);
-  color: var(--muted);
-  text-decoration: none;
-  padding: 8px 18px;
-  border-radius: 999px;
-  background: var(--soft);
-  border: 1px solid var(--line);
-  transition: all .2s;
-}
-
-.backBtn:hover {
-  color: var(--ink);
-  background: #ffffff;
-  border-color: #cbd5e1;
-  transform: translateY(-1px);
-}
-
-@media (max-width: 768px) {
-  .bottomGrid {
+/* ------------------------------------------------------------- Responsiveness */
+@media (max-width: 1024px) {
+  .dashboardGrid {
     grid-template-columns: 1fr;
+  }
+  .rightCol {
+    position: static;
+    height: 520px;
   }
 }
