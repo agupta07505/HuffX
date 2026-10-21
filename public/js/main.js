@@ -183,36 +183,118 @@ function initTool() {
     result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function statHTML(label, valHTML, sub, cls = '') {
-    return `<div class="stat ${cls}">
-      <span class="s-label">${label}</span>
-      <span class="s-val">${valHTML}</span>
-      <span class="s-sub">${sub}</span>
-    </div>`;
-  }
-
   function renderCompress(d) {
     const grew = d.saved_pct < 0;
     growNote.classList.toggle('hidden', !grew);
-    stats.innerHTML =
-      statHTML(grew ? 'Grew by' : 'Space saved', `<span id="svPct">0%</span>`,
-        `${d.ratio}× ${grew ? 'larger' : 'smaller'} · ${d.ms} ms`, grew ? 'hero-stat bad' : 'hero-stat') +
-      statHTML('Size', `${fmtBytes(d.original_size)} → ${fmtBytes(d.compressed_size)}`,
-        `overhead ${fmtBytes(d.overhead)}`) +
-      statHTML('Symbols', d.distinct_symbols.toLocaleString(),
-        `unique of ${d.symbols.toLocaleString()} · ${d.width}-bit`) +
-      statHTML('Avg code', `${d.avg_len} bits`,
-        `entropy ${d.entropy} · raw was ${d.width}`);
+    const diff = d.original_size - d.compressed_size;
+    const diffTxt = diff >= 0 ? `-${fmtBytes(diff)}` : `+${fmtBytes(Math.abs(diff))}`;
+
+    stats.innerHTML = `
+      <div class="result-banner ${grew ? 'banner-grow' : 'banner-save'}">
+        <div class="banner-top">
+          <span class="banner-label">${grew ? 'FILE SIZE INCREASED' : 'SPACE SAVED'}</span>
+          <span class="banner-badge ${grew ? 'badge-warn' : 'badge-good'}">
+            ${grew ? `${d.ratio}× larger` : `${d.ratio}× smaller`}
+          </span>
+        </div>
+        <div class="banner-body">
+          <div class="banner-pct" id="svPct">0%</div>
+          <div class="banner-sizes">
+            <span class="size-old">${fmtBytes(d.original_size)}</span>
+            <span class="size-arr">➔</span>
+            <span class="size-new">${fmtBytes(d.compressed_size)}</span>
+            <span class="size-diff ${grew ? 'diff-bad' : 'diff-good'}">(${diffTxt})</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="sb-label">SYMBOL WIDTH</div>
+          <div class="sb-val">${d.width}-bit</div>
+          <div class="sb-sub">${d.width / 8} ${d.width === 8 ? 'byte' : 'bytes'} per symbol chunk</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">VOCABULARY</div>
+          <div class="sb-val">${d.distinct_symbols.toLocaleString()} <small>unique</small></div>
+          <div class="sb-sub">of ${d.symbols.toLocaleString()} total symbols</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">AVG BIT LENGTH</div>
+          <div class="sb-val">${d.avg_len} <small>bits</small></div>
+          <div class="sb-sub">entropy: ${d.entropy} (raw: ${d.width}b)</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">CONTAINER OVERHEAD</div>
+          <div class="sb-val">${fmtBytes(d.overhead)}</div>
+          <div class="sb-sub">header + codebook table</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">EXECUTION SPEED</div>
+          <div class="sb-val">${d.ms} <small>ms</small></div>
+          <div class="sb-sub">pure Python Huffman DSA</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">COMPRESSION RATIO</div>
+          <div class="sb-val">${d.ratio}×</div>
+          <div class="sb-sub">${grew ? 'overhead exceeds savings' : 'input ÷ compressed size'}</div>
+        </div>
+      </div>
+    `;
+
     showResult(d.filename, d.download);
     countTo($('#svPct'), Math.abs(d.saved_pct), { decimals: 1, suffix: '%' });
   }
 
   function renderDecompress(d) {
-    stats.innerHTML =
-      statHTML('Restored', fmtBytes(d.orig_size), 'original bytes back ✓', 'hero-stat') +
-      statHTML('Width', `${d.width}-bit`, 'auto-read from header') +
-      statHTML('Codebook', d.codes.toLocaleString(), `${d.symbols.toLocaleString()} symbols decoded`) +
-      statHTML('Decode time', `${d.ms} ms`, fmtBytes(d.compressed_size) + ' in');
+    stats.innerHTML = `
+      <div class="result-banner banner-save">
+        <div class="banner-top">
+          <span class="banner-label">DECOMPRESSION SUCCESS</span>
+          <span class="banner-badge badge-good">100% Lossless Match ✓</span>
+        </div>
+        <div class="banner-body">
+          <div class="banner-pct">${fmtBytes(d.orig_size)}</div>
+          <div class="banner-sizes">
+            <span class="size-old">${fmtBytes(d.compressed_size)} in</span>
+            <span class="size-arr">➔</span>
+            <span class="size-new">${fmtBytes(d.orig_size)} restored</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="sb-label">DETECTED WIDTH</div>
+          <div class="sb-val">${d.width}-bit</div>
+          <div class="sb-sub">read from .hoffX header</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">SYMBOLS RESTORED</div>
+          <div class="sb-val">${d.symbols.toLocaleString()}</div>
+          <div class="sb-sub">exact original stream decoded</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">CODEBOOK LOOKUPS</div>
+          <div class="sb-val">${d.codes.toLocaleString()}</div>
+          <div class="sb-sub">distinct prefix-free codes</div>
+        </div>
+
+        <div class="stat-box">
+          <div class="sb-label">DECODE DURATION</div>
+          <div class="sb-val">${d.ms} <small>ms</small></div>
+          <div class="sb-sub">pure Python bitstream unpack</div>
+        </div>
+      </div>
+    `;
+
     showResult(d.filename, d.download);
   }
 
