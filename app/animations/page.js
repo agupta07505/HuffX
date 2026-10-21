@@ -301,55 +301,60 @@ export default function AnimationsPage() {
       </div>
 
       {/* Main Two-Column Side-by-Side Dashboard */}
-      {model && (
-        <div className={styles.dashboardGrid}>
-          {/* LEFT COLUMN: Controls, Frequencies, Codebook, and Bitstream */}
-          <div className={styles.leftCol}>
-            {/* 1. Input & Presets */}
-            <div className={styles.card}>
-              <div className={styles.inputWrap}>
-                <label htmlFor="textInput" className={styles.label}>TEST TEXT (MAX 24 CHARS)</label>
-                <input
-                  id="textInput"
-                  type="text"
-                  className={styles.textInput}
-                  value={inputVal}
-                  maxLength={24}
-                  onChange={e => setInputVal(e.target.value.toUpperCase())}
-                  placeholder="TYPE A WORD OR PHRASE"
-                />
-              </div>
+      <div className={styles.dashboardGrid}>
+        {/* LEFT COLUMN: Controls, Frequencies, Codebook, and Bitstream */}
+        <div className={styles.leftCol}>
+          {/* 1. Input & Presets - Always Visible */}
+          <div className={styles.card}>
+            <div className={styles.inputWrap}>
+              <label htmlFor="textInput" className={styles.label}>TEST TEXT (MAX 24 CHARS)</label>
+              <input
+                id="textInput"
+                type="text"
+                className={styles.textInput}
+                value={inputVal}
+                maxLength={24}
+                onChange={e => setInputVal(e.target.value.toUpperCase())}
+                placeholder="TYPE A WORD (E.G. HELLO)"
+              />
+            </div>
 
-              {/* Presets */}
-              <div className={styles.presetRow}>
-                <span className={styles.presetLabel}>Preset:</span>
-                {PRESETS.map(p => (
-                  <button
-                    key={p}
-                    type="button"
-                    className={`${styles.presetBtn} ${inputVal === p ? styles.presetActive : ''}`}
-                    onClick={() => setInputVal(p)}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
+            {/* Presets */}
+            <div className={styles.presetRow}>
+              <span className={styles.presetLabel}>Preset:</span>
+              {PRESETS.map(p => (
+                <button
+                  key={p}
+                  type="button"
+                  className={`${styles.presetBtn} ${inputVal === p ? styles.presetActive : ''}`}
+                  onClick={() => setInputVal(p)}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
 
-              {/* Frequencies */}
-              <div className={styles.freqRow}>
-                {Object.entries(model.freqMap).map(([ch, count], i) => (
+            {/* Frequencies */}
+            <div className={styles.freqRow}>
+              {model ? (
+                Object.entries(model.freqMap).map(([ch, count], i) => (
                   <div key={ch} className={styles.freqPill}>
                     <span className={styles.freqChar} style={{ color: PALETTE[i % PALETTE.length] }}>
                       {ch === ' ' ? '␣' : ch}
                     </span>
                     <span className={styles.freqCount}>×{count}</span>
                   </div>
-                ))}
-              </div>
+                ))
+              ) : (
+                <span className={styles.emptyHint}>Type characters to calculate frequencies...</span>
+              )}
             </div>
+          </div>
 
-            {/* 2. Step Controller Bar */}
-            <div className={styles.card}>
+          {model ? (
+            <>
+              {/* 2. Step Controller Bar */}
+              <div className={styles.card}>
               <div className={styles.stepHeader}>
                 <span className={styles.stepBadge}>
                   {currentStep === 0
@@ -488,91 +493,110 @@ export default function AnimationsPage() {
                 </div>
               </div>
             </div>
+          </>
+        ) : (
+          <div className={`${styles.card} ${styles.emptyCard}`}>
+            <span className={styles.emptyCardTitle}>Waiting for Input</span>
+            <p className={styles.emptyCardText}>
+              Enter characters above or click a preset to see the step-by-step min-heap merges, prefix codebook, and compressed bitstream.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* RIGHT COLUMN: Interactive Binary Tree Stage */}
+      <div className={styles.rightCol}>
+        <div className={styles.treeCard}>
+          <div className={styles.treeHeader}>
+            <div>
+              <span className={styles.treeTitle}>HUFFMAN BINARY TREE STAGE</span>
+              <span className={styles.treeSub}>
+                {model ? `${activeVisibility.nodeIds.size} nodes · ${activeVisibility.edgeKeys.size} edges visible` : 'No active input'}
+              </span>
+            </div>
+            <span className={styles.treeHint}>0 = Left · 1 = Right</span>
           </div>
 
-          {/* RIGHT COLUMN: Interactive Binary Tree Stage */}
-          <div className={styles.rightCol}>
-            <div className={styles.treeCard}>
-              <div className={styles.treeHeader}>
-                <div>
-                  <span className={styles.treeTitle}>HUFFMAN BINARY TREE STAGE</span>
-                  <span className={styles.treeSub}>
-                    {activeVisibility.nodeIds.size} nodes · {activeVisibility.edgeKeys.size} edges visible
-                  </span>
-                </div>
-                <span className={styles.treeHint}>0 = Left · 1 = Right</span>
-              </div>
+          <div className={styles.treeContainer}>
+            {model && layout ? (
+              <svg
+                viewBox={`0 0 ${layout.width} ${layout.height}`}
+                className={styles.treeSvg}
+                role="img"
+                aria-label="Interactive Huffman Binary Tree"
+              >
+                {/* Edges */}
+                {layout.edges.map(e => {
+                  const isVisible = activeVisibility.edgeKeys.has(e.key);
+                  return (
+                    <g key={e.key} className={styles.edgeGroup} opacity={isVisible ? 1 : 0.08}>
+                      <line
+                        x1={e.x1}
+                        y1={e.y1}
+                        x2={e.x2}
+                        y2={e.y2}
+                        className={styles.treeEdge}
+                      />
+                      <circle cx={e.midX} cy={e.midY} r="8.5" className={styles.edgeBadgeBg} />
+                      <text x={e.midX} y={e.midY + 3.5} className={styles.edgeBitText}>
+                        {e.bit}
+                      </text>
+                    </g>
+                  );
+                })}
 
-              <div className={styles.treeContainer}>
-                {layout && (
-                  <svg
-                    viewBox={`0 0 ${layout.width} ${layout.height}`}
-                    className={styles.treeSvg}
-                    role="img"
-                    aria-label="Interactive Huffman Binary Tree"
-                  >
-                    {/* Edges */}
-                    {layout.edges.map(e => {
-                      const isVisible = activeVisibility.edgeKeys.has(e.key);
-                      return (
-                        <g key={e.key} className={styles.edgeGroup} opacity={isVisible ? 1 : 0.08}>
-                          <line
-                            x1={e.x1}
-                            y1={e.y1}
-                            x2={e.x2}
-                            y2={e.y2}
-                            className={styles.treeEdge}
-                          />
-                          <circle cx={e.midX} cy={e.midY} r="8.5" className={styles.edgeBadgeBg} />
-                          <text x={e.midX} y={e.midY + 3.5} className={styles.edgeBitText}>
-                            {e.bit}
+                {/* Nodes */}
+                {layout.nodes.map(n => {
+                  const isVisible = activeVisibility.nodeIds.has(n.id);
+                  return (
+                    <g
+                      key={n.id}
+                      className={`${styles.treeNode} ${n.isLeaf ? styles.nodeLeaf : styles.nodeInternal}`}
+                      transform={`translate(${n.cx}, ${n.cy})`}
+                      opacity={isVisible ? 1 : 0.08}
+                    >
+                      <circle
+                        r="20"
+                        className={styles.nodeCircle}
+                        style={{
+                          stroke: n.isLeaf ? n.color : '#111114',
+                          fill: n.isLeaf ? '#ffffff' : '#f8fafc',
+                        }}
+                      />
+                      {n.isLeaf ? (
+                        <>
+                          <text y="4" className={styles.nodeChar} fill={n.color}>
+                            {n.ch === ' ' ? '␣' : n.ch}
                           </text>
-                        </g>
-                      );
-                    })}
-
-                    {/* Nodes */}
-                    {layout.nodes.map(n => {
-                      const isVisible = activeVisibility.nodeIds.has(n.id);
-                      return (
-                        <g
-                          key={n.id}
-                          className={`${styles.treeNode} ${n.isLeaf ? styles.nodeLeaf : styles.nodeInternal}`}
-                          transform={`translate(${n.cx}, ${n.cy})`}
-                          opacity={isVisible ? 1 : 0.08}
-                        >
-                          <circle
-                            r="20"
-                            className={styles.nodeCircle}
-                            style={{
-                              stroke: n.isLeaf ? n.color : '#111114',
-                              fill: n.isLeaf ? '#ffffff' : '#f8fafc',
-                            }}
-                          />
-                          {n.isLeaf ? (
-                            <>
-                              <text y="4" className={styles.nodeChar} fill={n.color}>
-                                {n.ch === ' ' ? '␣' : n.ch}
-                              </text>
-                              <text y="30" className={styles.nodeSubFreq}>
-                                ×{n.count}
-                              </text>
-                            </>
-                          ) : (
-                            <text y="4" className={styles.nodeFreq} fill="#111114">
-                              {n.count}
-                            </text>
-                          )}
-                        </g>
-                      );
-                    })}
-                  </svg>
-                )}
+                          <text y="30" className={styles.nodeSubFreq}>
+                            ×{n.count}
+                          </text>
+                        </>
+                      ) : (
+                        <text y="4" className={styles.nodeFreq} fill="#111114">
+                          {n.count}
+                        </text>
+                      )}
+                    </g>
+                  );
+                })}
+              </svg>
+            ) : (
+              <div className={styles.emptyTreeState}>
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={styles.emptyIcon}>
+                  <circle cx="12" cy="5" r="3" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="18" r="3" />
+                  <path d="M12 8v3M10 13l-3 3M14 13l3 3" />
+                </svg>
+                <p className={styles.emptyPromptTitle}>No Tree to Display</p>
+                <p className={styles.emptyPromptSub}>Type any text on the left or select a preset to generate the Huffman binary tree.</p>
               </div>
-            </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
+    </div>
     </main>
   );
 }
