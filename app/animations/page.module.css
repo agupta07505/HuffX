@@ -1,0 +1,525 @@
+/* ==============================================================================
+   HuffX — Interactive Animations Page Module Styles (app/animations/page.js)
+   ============================================================================== */
+
+.page {
+  flex: 1;
+  width: min(920px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 56px 0 64px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.kicker {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: .98rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------------- Input Control Card */
+.controlCard {
+  background: rgba(255, 255, 255, .85);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 22px;
+  box-shadow: 0 4px 18px -6px rgba(17, 17, 20, .05);
+  backdrop-filter: blur(12px);
+  margin-bottom: 22px;
+}
+
+.inputRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.inputWrap {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.textInput {
+  border: 1.5px solid var(--line);
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font: 700 1.05rem var(--font-mono);
+  color: var(--ink);
+  letter-spacing: .06em;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.textInput:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, .15);
+}
+
+.presetWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.presetButtons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.presetBtn {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: 600 .76rem var(--font-mono);
+  color: #4b5563;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.presetBtn:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.presetActive {
+  background: var(--accent-soft) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent-dark) !important;
+  font-weight: 700;
+}
+
+/* ----------------------------------------------------------- Visualizer Card */
+.vizCard {
+  background: rgba(255, 255, 255, .95);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  backdrop-filter: blur(14px);
+}
+
+/* Step Bar */
+.stepBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1.5px solid var(--line);
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.stepInfo {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stepBadge {
+  font-family: var(--font-display);
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stepDesc {
+  font-size: .82rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.stepControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ctrlBtn {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: 600 .82rem var(--font-ui);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.ctrlBtn:hover:not(:disabled) {
+  background: var(--soft);
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.ctrlBtn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.ctrlPrimary {
+  background: var(--ink) !important;
+  color: #ffffff !important;
+  border-color: var(--ink) !important;
+}
+
+.ctrlPrimary:hover:not(:disabled) {
+  background: #000000 !important;
+}
+
+.speedBtn {
+  background: none;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  padding: 7px 11px;
+  font: 600 .76rem var(--font-mono);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.speedBtn:hover {
+  color: var(--ink);
+  border-color: #94a3b8;
+}
+
+/* Frequency Pills Row */
+.freqRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.freqPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 5px 12px;
+  box-shadow: 0 1px 3px rgba(17, 17, 20, .04);
+}
+
+.freqChar {
+  font: 700 1.05rem var(--font-display);
+}
+
+.freqCount {
+  font: 600 .8rem var(--font-mono);
+  color: #64748b;
+}
+
+/* Tree Stage */
+.treeStage {
+  background: radial-gradient(circle, rgba(248, 250, 252, 0.9) 0%, rgba(241, 245, 249, 0.6) 100%);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  min-height: 280px;
+}
+
+.treeSvg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  transition: all .3s ease;
+}
+
+.edgeGroup {
+  transition: opacity .35s ease;
+}
+
+.treeEdge {
+  stroke: #cbd5e1;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.edgeBadgeBg {
+  fill: #ffffff;
+  stroke: #cbd5e1;
+  stroke-width: 1.2;
+}
+
+.edgeBitText {
+  font: 700 9px var(--font-mono);
+  text-anchor: middle;
+  fill: var(--accent);
+}
+
+.treeNode {
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.nodeCircle {
+  stroke-width: 2.2;
+  transition: stroke .2s;
+  filter: drop-shadow(0 2px 4px rgba(17, 17, 20, .08));
+}
+
+.nodeChar {
+  font: 700 14px var(--font-display);
+  text-anchor: middle;
+}
+
+.nodeSubFreq {
+  font: 600 10px var(--font-mono);
+  text-anchor: middle;
+  fill: #64748b;
+}
+
+.nodeFreq {
+  font: 700 12px var(--font-mono);
+  text-anchor: middle;
+}
+
+/* Bottom Grid: Codebook & Bitstream */
+.bottomGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.codesCard,
+.verdictCard {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardLabel {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.cardBadge {
+  font-size: .74rem;
+  font-weight: 700;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.cardBadgeGood {
+  font-size: .8rem;
+  font-weight: 800;
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* Codebook Table */
+.codesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .84rem;
+}
+
+.codesTable th {
+  text-align: left;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #94a3b8;
+  text-transform: uppercase;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.codesTable td {
+  padding: 6px 4px;
+  border-bottom: 1px solid rgba(226, 232, 240, .6);
+}
+
+.symDot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.monoCol {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.codePill {
+  background: #ffffff;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  letter-spacing: .08em;
+}
+
+/* Bitstream */
+.bitstreamWrap {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: .92rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  line-height: 1.8;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.bitToken {
+  font-weight: 700;
+  padding-bottom: 1px;
+}
+
+/* Compare Banner */
+.compareBanner {
+  background: #ffffff;
+  border: 1.5px solid #dbeafe;
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 12px;
+}
+
+.compareItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.compareArrow {
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.cLabel {
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.cVal {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.cValGood {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #047857;
+}
+
+.cSub {
+  font-size: .72rem;
+  color: #64748b;
+}
+
+/* Back Link */
+.backRow {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 .88rem var(--font-ui);
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  transition: all .2s;
+}
+
+.backBtn:hover {
+  color: var(--ink);
+  background: #ffffff;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .bottomGrid {
+    grid-template-columns: 1fr;
+  }
+}

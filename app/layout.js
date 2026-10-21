@@ -47,6 +47,7 @@ export default function RootLayout({ children }) {
           </a>
 
           <div className="nav-links">
+            <a href="/animations" className="nav-link">Animations</a>
             {/* Replace '#' with your actual project report link (e.g. Google Docs, PDF, or GitHub) */}
             <a
               href="#"
@@ -74,6 +75,10 @@ export default function RootLayout({ children }) {
             <span className="foot-brand">HuffX</span> © 2026 &nbsp;·&nbsp; Crafted with{' '}
             <span className="heart">♥</span> by <b>Animesh Gupta</b> &amp; <b>Vikrant Krishna</b>
           </p>
+          <div className="foot-links">
+            <a href="/">Workspace</a>
+            <a href="/animations">Animations</a>
+          </div>
         </footer>
 
         {/* Local bundled scripts - 100% offline and dependency-free */}

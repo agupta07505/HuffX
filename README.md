@@ -223,6 +223,9 @@ huffx/
 │   ├── layout.js         # Root HTML layout, navigation, and footer
 │   ├── page.js           # Interactive compression workspace
 │   ├── page.module.css   # Scoped CSS module for the tool workspace
+│   ├── animations/       # Step-by-step interactive Huffman visualizer
+│   │   ├── page.js       # Dynamic SVG tree builder & step controller
+│   │   └── page.module.css # Scoped styles for tree animation
 │   ├── globals.css       # Global design tokens and theme styles
 │   └── api/
 │       ├── compress/route.js        # File upload & compression handler
