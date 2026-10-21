@@ -22,7 +22,9 @@ export const metadata = {
   description:
     'HuffX — Huffman text compression at 8, 32, 64 & 128-bit symbol widths. Pure Python engine. Every bit counts.',
   icons: {
-    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Ctext x='32' y='43' font-family='monospace' font-size='28' font-weight='bold' fill='white' text-anchor='middle'%3E01%3C/text%3E%3C/svg%3E",
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
   },
 };
 
@@ -40,13 +42,7 @@ export default function RootLayout({ children }) {
 
         <header className="nav" id="nav">
           <a className="brand" href="/" aria-label="HuffX home">
-            <svg viewBox="0 0 26 26" width="26" height="26" fill="none" aria-hidden="true">
-              <path d="M13 5.5 L6 14 M13 5.5 L20 14" stroke="#111114" strokeWidth="1.7" strokeLinecap="round" />
-              <circle cx="13" cy="4.5" r="3.1" fill="#111114" />
-              <circle cx="6" cy="16.5" r="3.6" fill="#4f46e5" />
-              <circle cx="20" cy="16.5" r="3.6" fill="#fff" stroke="#4f46e5" strokeWidth="1.7" />
-              <path d="M6 20.5 L6 23.5 M20 20.5 L20 23.5" stroke="#4f46e5" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+            <img src="/icon.svg" width="26" height="26" alt="HuffX logo" />
             <span>HuffX</span>
           </a>
 
