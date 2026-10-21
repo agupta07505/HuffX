@@ -9,11 +9,11 @@ function introAnim() {
   if (!window.gsap) return;
   const gsap = window.gsap;
   gsap.from('#nav', { y: -18, opacity: 0, duration: .55, ease: 'power3.out' });
-  gsap.from(['.kicker', '.tagline, .page-title', '.sub, .page-sub'], {
+  gsap.from(['.kicker', '.tagline', '.sub'], {
     y: 26, opacity: 0, duration: .7, stagger: .09, ease: 'power3.out', delay: .08
   });
-  gsap.from('.tool-card, .viz-card, .doc-sec', {
-    y: 30, opacity: 0, duration: .75, stagger: .07, ease: 'power3.out', delay: .3
+  gsap.from('.tool-card', {
+    y: 30, opacity: 0, duration: .75, ease: 'power3.out', delay: .3
   });
   gsap.from('.site-footer', { opacity: 0, duration: .8, delay: .9 });
 }

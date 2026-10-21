@@ -71,9 +71,9 @@ graph TD
             ▼                                     ▼
 ┌───────────────────────────────┐   ┌───────────────────────────┐
 │     Next.js Web Server        │   │ Standalone Terminal Usage │
-│ - Page Workspace (page.js)    │   │ python huffman.py compress│
-│ - Animations (anim.js)        │   │ python huffman.py decompress
-│ - API Routes (/api/*)         │   │ python huffman.py selftest│
+│ - Compression Workspace (page.js)│   │ python huffman.py compress│
+│ - API Routes (/api/*)         │   │ python huffman.py decompress│
+│                               │   │ python huffman.py selftest│
 └───────────────┬───────────────┘   └─────────────┬─────────────┘
                 │ JSON / execFile                 │
                 ▼                                 │
@@ -227,9 +227,8 @@ The frontend is built using Next.js (App Router) and structured with scoped CSS 
 
 ### 6.1 Architecture of Styles
 - **Global Styles ([`app/globals.css`](file:///a:/HuffX/app/globals.css)):** Contains only shared tokens (`:root` color palette, system typography, navigation bar, and footer).
-- **Direct Particles Component ([`app/components/ParticlesBackground.js`](file:///a:/HuffX/app/components/ParticlesBackground.js)):** Self-contained HTML5 Canvas particle network that works 100% offline with zero CDN dependencies.
+- **Direct Particles Component ([`components/ParticlesBackground.js`](file:///a:/HuffX/components/ParticlesBackground.js)):** Self-contained HTML5 Canvas particle network that works 100% offline with zero CDN dependencies.
 - **Home Workspace Module ([`app/page.module.css`](file:///a:/HuffX/app/page.module.css)):** Scopes all styles for the hero banner, drag-and-drop zone, file chips, symbol width buttons, and compression stat cards.
-- **Visualizer Module ([`app/animations/page.module.css`](file:///a:/HuffX/app/animations/page.module.css)):** Scopes the interactive letter stage, frequency bars, animated SVG tree nodes, and bitstream visualizer.
 
 ### 6.2 Python-Node Bridge ([`pyengine.py`](file:///a:/HuffX/pyengine.py))
 The Next.js route handlers invoke `pyengine.py` via asynchronous child processes. The Python bridge executes the pure-Python compression/decompression and streams a single clean JSON response:

@@ -23,14 +23,12 @@ npm run dev              # → http://localhost:5000
 
 - **Compress** — drop a `.txt`, pick a width, get a `.hoffX` file back
 - **Decompress** — drop any `.hoffX` file, get the original `.txt` back
-- **Live animation** — `/animations`
 
 ## Architecture
 
 ```
 browser ──► Next.js (App Router, port 5000)
               ├── app/page.js ............ home tool UI
-              ├── app/animations ......... live Huffman animation
               └── app/api/* .............. route handlers
                        │  spawn python3 pyengine.py …
                        ▼
@@ -82,14 +80,16 @@ huffx/
 ├── app/
 │   ├── layout.js         # nav, footer, fonts, scripts
 │   ├── page.js           # home — compress / decompress tool
-│   ├── globals.css       # minimal design system
-│   ├── animations/page.js
+│   ├── page.module.css   # scoped workspace styles
+│   ├── globals.css       # global tokens and layout
 │   └── api/
 │       ├── compress/route.js
 │       ├── decompress/route.js
 │       └── download/[token]/route.js
+├── components/           # ParticlesBackground component (Canvas)
 ├── lib/engine.js         # spawn-python / temp-token helpers
-└── public/js/            # main.js (tool logic) · anim.js (tree animation)
+├── SetUp/                # Windows setup.bat & run.bat
+└── public/js/            # main.js (tool logic) · gsap.min.js
 ```
 
 *Every bit counts.* ✦
