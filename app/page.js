@@ -69,7 +69,6 @@ export default function Home() {
           <span className={`${styles.spinner} spinner`} aria-hidden="true"></span>
         </button>
 
-        <p className={`${styles.hint} hint`} id="hint">Lossless · outputs <b>.hoff8</b> · 16 MB max</p>
 
         <div className={`${styles.result} result hidden`} id="result">
           <div className={`${styles.stats} stats`} id="stats"></div>
@@ -91,11 +90,6 @@ export default function Home() {
         </div>
       </section>
 
-      <div className={`${styles.steps} steps`} aria-hidden="true">
-        <div className={`${styles.step} step`}><b>01</b><span>Drop a .txt</span></div>
-        <div className={`${styles.step} step`}><b>02</b><span>Pick a width</span></div>
-        <div className={`${styles.step} step`}><b>03</b><span>Get your .hoffX</span></div>
-      </div>
     </main>
   );
 }

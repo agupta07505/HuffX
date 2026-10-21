@@ -1,6 +1,7 @@
 import Script from 'next/script';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
+import ParticlesBackground from './components/ParticlesBackground';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -35,7 +36,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${grotesk.variable}`}>
       <body>
-        <div id="particles-js" aria-hidden="true"></div>
+        <ParticlesBackground />
 
         <header className="nav" id="nav">
           <a className="brand" href="/" aria-label="HuffX home">
@@ -65,9 +66,8 @@ export default function RootLayout({ children }) {
           </nav>
         </footer>
 
-        {/* classic scripts, executed in order once the page is interactive */}
-        <Script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" strategy="afterInteractive" />
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" strategy="afterInteractive" />
+        {/* Local bundled scripts - 100% offline and dependency-free */}
+        <Script src="/js/gsap.min.js" strategy="beforeInteractive" />
         <Script src="/js/main.js" strategy="afterInteractive" />
       </body>
     </html>

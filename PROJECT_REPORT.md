@@ -226,7 +226,8 @@ Decompression reconstructs the exact original file without any data loss:
 The frontend is built using Next.js (App Router) and structured with scoped CSS Modules for maximum organization:
 
 ### 6.1 Architecture of Styles
-- **Global Styles ([`app/globals.css`](file:///a:/HuffX/app/globals.css)):** Contains only shared tokens (`:root` color palette, system typography, `#particles-js` canvas, navigation bar, and footer).
+- **Global Styles ([`app/globals.css`](file:///a:/HuffX/app/globals.css)):** Contains only shared tokens (`:root` color palette, system typography, navigation bar, and footer).
+- **Direct Particles Component ([`app/components/ParticlesBackground.js`](file:///a:/HuffX/app/components/ParticlesBackground.js)):** Self-contained HTML5 Canvas particle network that works 100% offline with zero CDN dependencies.
 - **Home Workspace Module ([`app/page.module.css`](file:///a:/HuffX/app/page.module.css)):** Scopes all styles for the hero banner, drag-and-drop zone, file chips, symbol width buttons, and compression stat cards.
 - **Visualizer Module ([`app/animations/page.module.css`](file:///a:/HuffX/app/animations/page.module.css)):** Scopes the interactive letter stage, frequency bars, animated SVG tree nodes, and bitstream visualizer.
 

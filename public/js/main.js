@@ -3,40 +3,6 @@
    particles background, entrance motion, and the compress/decompress tool.
    ========================================================================== */
 
-/* ------------------------------------------------------------- particles */
-function initParticles() {
-  if (!window.particlesJS || !document.getElementById('particles-js')) return;
-  window.particlesJS('particles-js', {
-    particles: {
-      number: { value: 55, density: { enable: true, value_area: 900 } },
-      color: { value: '#b9bee6' },
-      shape: { type: 'circle' },
-      opacity: { value: 0.55, random: true },
-      size: { value: 2.4, random: true },
-      line_linked: {
-        enable: true, distance: 130,
-        color: '#c9cdea', opacity: 0.45, width: 1
-      },
-      move: {
-        enable: true, speed: 1.05, direction: 'none',
-        random: true, straight: false, out_mode: 'out'
-      }
-    },
-    interactivity: {
-      detect_on: 'canvas',
-      events: {
-        onhover: { enable: true, mode: 'grab' },
-        onclick: { enable: true, mode: 'push' },
-        resize: true
-      },
-      modes: {
-        grab: { distance: 150, line_linked: { opacity: 0.75 } },
-        push: { particles_nb: 3 }
-      }
-    },
-    retina_detect: true
-  });
-}
 
 /* -------------------------------------------------------- entrance motion */
 function introAnim() {
@@ -49,7 +15,6 @@ function introAnim() {
   gsap.from('.tool-card, .viz-card, .doc-sec', {
     y: 30, opacity: 0, duration: .75, stagger: .07, ease: 'power3.out', delay: .3
   });
-  gsap.from('.steps', { opacity: 0, y: 14, duration: .6, delay: .75, ease: 'power2.out' });
   gsap.from('.site-footer', { opacity: 0, duration: .8, delay: .9 });
 }
 
@@ -86,7 +51,7 @@ function popIn(container) {
 function initTool() {
   const dz = $('#dropzone'), fi = $('#fileInput'), chip = $('#fileChip');
   const cta = $('#goBtn'), errBox = $('#errBox'), result = $('#result');
-  const stats = $('#stats'), wp = $('#widthPicker'), hint = $('#hint');
+  const stats = $('#stats'), wp = $('#widthPicker');
   const pill = $('.mode-pill');
   const modeBtns = Array.from(document.querySelectorAll('.mode-btn'));
   const growNote = $('#growNote');
@@ -122,13 +87,11 @@ function initTool() {
       fi.accept = '.txt';
       $('#ctaLabel').textContent = 'Compress';
       wp.classList.remove('hidden');
-      updateHint();
     } else {
       $('#dropText').innerHTML = 'Drop your <b>.hoffX</b> file here';
       fi.accept = '.hoff8,.hoff32,.hoff64,.hoff128';
       $('#ctaLabel').textContent = 'Decompress';
       wp.classList.add('hidden');
-      hint.innerHTML = 'Width auto-detected from the header · restores the original <b>.txt</b>';
     }
     if (window.gsap) window.gsap.fromTo('#toolCard', { scale: .985 }, { scale: 1, duration: .35, ease: 'back.out(2)' });
   }
@@ -136,17 +99,12 @@ function initTool() {
   requestAnimationFrame(movePill);
   window.addEventListener('load', movePill);
 
-  function updateHint() {
-    hint.innerHTML = `Lossless · outputs <b>.hoff${width}</b> · 16 MB max`;
-  }
-
   /* ---- width picker ---- */
   wp.querySelectorAll('.wp-btn').forEach(b => {
     b.addEventListener('click', () => {
       wp.querySelectorAll('.wp-btn').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
       width = parseInt(b.dataset.width, 10);
-      updateHint();
       hideResult();
     });
   });
@@ -300,13 +258,10 @@ function initTool() {
     clearFile();
     if (window.gsap) window.gsap.from(dz, { opacity: 0, y: 8, duration: .3, clearProps: 'all' });
   });
-
-  updateHint();
 }
 
 /* ------------------------------------------------------------------ boot */
 function huffxBoot() {
-  initParticles();
   introAnim();
   if (document.getElementById('toolCard')) initTool();
 }

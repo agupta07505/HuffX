@@ -12,7 +12,6 @@ node_modules/
 out/
 build/
 dist/
-AGENTS.md
 
 # Python Cache & Bytecode
 __pycache__/

@@ -63,13 +63,6 @@ body::after {
   to   { transform: translate(-4vw, 3vh) scale(1.08); }
 }
 
-/* Particles background canvas */
-#particles-js {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-}
-
 a { color: inherit; }
 
 /* Global utility */

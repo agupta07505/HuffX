@@ -289,8 +289,6 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.hint { margin-top: 13px; text-align: center; font-size: .8rem; color: var(--faint); }
-.hint b { color: var(--muted); font-family: var(--font-mono); font-weight: 600; }
 
 /* Result */
 .result {
@@ -389,23 +387,10 @@
 
 .ghost:hover { color: var(--ink); background: var(--soft); }
 
-/* Steps */
-.steps {
-  margin-top: 34px;
-  display: flex;
-  justify-content: center;
-  gap: 34px;
-  color: var(--faint);
-  font-size: .84rem;
-}
-
-.step { display: flex; align-items: center; gap: 8px; }
-.step b { font-family: var(--font-mono); color: var(--accent); font-weight: 600; font-size: .8rem; }
 
 @media (max-width: 640px) {
   .wpOptions { grid-template-columns: repeat(2, 1fr); }
   .stats { grid-template-columns: repeat(2, 1fr); }
-  .steps { flex-direction: column; gap: 10px; align-items: center; }
   .toolCard { padding: 18px; }
   .hero { padding-top: 60px; }
 }
