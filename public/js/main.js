@@ -122,14 +122,12 @@ function initTool() {
       fi.accept = '.txt';
       $('#ctaLabel').textContent = 'Compress';
       wp.classList.remove('hidden');
-      $('#sampleLine').classList.remove('hidden');
       updateHint();
     } else {
       $('#dropText').innerHTML = 'Drop your <b>.hoffX</b> file here';
       fi.accept = '.hoff8,.hoff32,.hoff64,.hoff128';
       $('#ctaLabel').textContent = 'Decompress';
       wp.classList.add('hidden');
-      $('#sampleLine').classList.add('hidden');
       hint.innerHTML = 'Width auto-detected from the header · restores the original <b>.txt</b>';
     }
     if (window.gsap) window.gsap.fromTo('#toolCard', { scale: .985 }, { scale: 1, duration: .35, ease: 'back.out(2)' });
@@ -295,27 +293,6 @@ function initTool() {
     }
   });
 
-  /* ---- sample shortcut ---- */
-  $('#sampleBtn').addEventListener('click', async () => {
-    hideErr();
-    hideResult();
-    setLoading(true);
-    try {
-      const fd = new FormData();
-      fd.append('width', width);
-      const d = await post('/api/sample', fd);
-      $('#chipName').textContent = 'sample.txt';
-      $('#chipSize').textContent = fmtBytes(d.original_size) + ' · built-in';
-      chip.classList.remove('hidden');
-      dz.classList.add('hidden');
-      renderCompress(d);
-    } catch (e) {
-      showErr(e.message);
-    } finally {
-      setLoading(false);
-      cta.disabled = !file; // sample doesn't set a real file
-    }
-  });
 
   /* ---- reset ---- */
   $('#resetBtn').addEventListener('click', () => {

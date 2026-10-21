@@ -10,24 +10,26 @@ a **Next.js** app (App Router, plain CSS, `.js` everywhere) sitting on a
 
 ## Run it
 
+### One-Click Setup & Launch (Windows)
+Double-click `SetUp/run.bat` (or run `SetUp\run.bat` in CMD / PowerShell).
+
+*The script checks Python, checks Node/npm, automatically installs dependencies if `node_modules` is missing, tests the Python engine, and launches the server at `http://localhost:5000`.*
+
+### Or Manual Start
 ```bash
 npm install
-npm run build
-npm start            # → http://localhost:5000
+npm run dev              # → http://localhost:5000
 ```
-
-Dev mode: `npm run dev` (also on port 5000).
 
 - **Compress** — drop a `.txt`, pick a width, get a `.hoffX` file back
 - **Decompress** — drop any `.hoffX` file, get the original `.txt` back
-- **Docs** — `/docs` · **Live animation** — `/animations`
+- **Live animation** — `/animations`
 
 ## Architecture
 
 ```
 browser ──► Next.js (App Router, port 5000)
               ├── app/page.js ............ home tool UI
-              ├── app/docs ............... documentation
               ├── app/animations ......... live Huffman animation
               └── app/api/* .............. route handlers
                        │  spawn python3 pyengine.py …
@@ -73,21 +75,18 @@ python huffman.py decompress essay.hoff32               # → essay.txt
 
 ```
 huffx/
-├── huffman.py            # the compressor (all the brains, zero dependencies)
-├── pyengine.py           # thin bridge the API routes shell into
-├── sample.txt            # built-in demo text
+├── huffman.py            # pure-Python Huffman engine (5-step DSA implementation)
+├── pyengine.py           # bridge CLI communicating with API via JSON
 ├── package.json
 ├── next.config.js
 ├── app/
 │   ├── layout.js         # nav, footer, fonts, scripts
 │   ├── page.js           # home — compress / decompress tool
-│   ├── globals.css       # the whole white minimal design system
-│   ├── docs/page.js
+│   ├── globals.css       # minimal design system
 │   ├── animations/page.js
 │   └── api/
 │       ├── compress/route.js
 │       ├── decompress/route.js
-│       ├── sample/route.js
 │       └── download/[token]/route.js
 ├── lib/engine.js         # spawn-python / temp-token helpers
 └── public/js/            # main.js (tool logic) · anim.js (tree animation)

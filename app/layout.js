@@ -49,7 +49,6 @@ export default function RootLayout({ children }) {
             <span>HuffX</span>
           </a>
           <nav className="nav-links">
-            <a href="/docs">Documentation</a>
             <a href="/animations">Animations</a>
           </nav>
         </header>
@@ -62,8 +61,6 @@ export default function RootLayout({ children }) {
             <span className="heart">♥</span> by <b>Animesh Gupta</b> &amp; <b>Vikrant Krishna</b>
           </p>
           <nav className="foot-links" aria-label="Footer">
-            <a href="/docs">Documentation</a>
-            <span className="dot">·</span>
             <a href="/animations">Animations</a>
           </nav>
         </footer>

@@ -2,10 +2,7 @@
    HuffX — animations page (public, loaded by app/animations/page.js)
    Replays the whole Huffman pipeline on "ABRACADABRA":
    count → merge tree → codes → packed bits.
-   Drop your own video/GIF below with ANIM_MEDIA_URL.
    ========================================================================== */
-
-const ANIM_MEDIA_URL = '';   // ← e.g. 'https://www.youtube.com/embed/VIDEO_ID' or a .mp4 link
 
 const VIZ_TEXT = 'ABRACADABRA';
 const COLORS = { A: '#4f46e5', B: '#0ea5e9', C: '#f59e0b', D: '#10b981', R: '#ef4444' };
@@ -233,20 +230,9 @@ async function playViz() {
   if (window.gsap) window.gsap.from(verdictEl, { opacity: 0, y: 10, delay: .5 * STEP, duration: .5 * STEP, ease: 'power2.out' });
 }
 
-/* your own media slot */
-function mountOwnSlot() {
-  const slot = document.getElementById('ownSlot');
-  if (!slot || !ANIM_MEDIA_URL) return;
-  const isVideo = /\.(mp4|webm|ogg)(\?|$)/i.test(ANIM_MEDIA_URL);
-  slot.innerHTML = isVideo
-    ? `<video controls src="${ANIM_MEDIA_URL}"></video>`
-    : `<iframe src="${ANIM_MEDIA_URL}" allowfullscreen loading="lazy" title="Team animation"></iframe>`;
-}
-
 /* ------------------------------------------------------------------ boot */
 function animBoot() {
   if (!document.getElementById('vizTree')) return;
-  mountOwnSlot();
   (function startWhenReady(tries) {
     if (window.gsap || REDUCED || tries > 40) { playViz(); return; }
     setTimeout(() => startWhenReady(tries + 1), 100);
