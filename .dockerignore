@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.gitignore
+*.hoff8
+*.hoff32
+*.hoff64
+*.hoff128
+__pycache__
+*.pyc
+instance
+.env*
+npm-debug.log*
