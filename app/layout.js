@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
             <a href="/animations" className="nav-link">Animations</a>
             {/* Replace '#' with your actual project report link (e.g. Google Docs, PDF, or GitHub) */}
             <a
-              href="#"
+              href="/HuffX_Report_File.pdf"
               className="report-btn"
               target="_blank"
               rel="noopener noreferrer"
